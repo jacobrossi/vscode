@@ -227,12 +227,12 @@ export class PointerHandler implements IDisposable {
 	private handler: MouseHandler;
 
 	constructor(context: ViewContext, viewController: ViewController, viewHelper: IPointerHandlerHelper) {
-		if (window.navigator.msPointerEnabled) {
-			this.handler = new MsPointerHandler(context, viewController, viewHelper);
+		if ((<any>window).PointerEvent) {
+			this.handler = new StandardPointerHandler(context, viewController, viewHelper);
 		} else if ((<any>window).TouchEvent) {
 			this.handler = new TouchHandler(context, viewController, viewHelper);
-		} else if (window.navigator.pointerEnabled) {
-			this.handler = new StandardPointerHandler(context, viewController, viewHelper);
+		} else if (window.navigator.msPointerEnabled) {
+			this.handler = new MsPointerHandler(context, viewController, viewHelper);
 		} else {
 			this.handler = new MouseHandler(context, viewController, viewHelper);
 		}
